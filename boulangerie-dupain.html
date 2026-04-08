@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Boulangerie Dupain — Artisan Boulanger depuis 1985</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --creme: #fdf6e3;
+      --or: #c8922a;
+      --or-clair: #e8b84b;
+      --brun: #3e1f00;
+      --brun-clair: #7a4e1a;
+      --blanc: #fff9f0;
+      --gris: #888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--creme);
+      color: var(--brun);
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: var(--brun);
+      padding: 18px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      color: var(--or-clair);
+      letter-spacing: 1px;
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    nav ul a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--or-clair); }
+
+    /* ===== HERO ===== */
+    #accueil {
+      background: var(--brun);
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #accueil::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(200,146,42,0.15) 0%, transparent 70%);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid rgba(200,146,42,0.5);
+      color: var(--or-clair);
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 30px;
+      margin-bottom: 28px;
+    }
+
+    #accueil h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px;
+      color: white;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      max-width: 700px;
+    }
+
+    #accueil h1 em {
+      color: var(--or-clair);
+      font-style: italic;
+    }
+
+    #accueil p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .btn-or {
+      background: var(--or);
+      color: white;
+      padding: 15px 36px;
+      border-radius: 4px;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-or:hover { background: var(--or-clair); }
+
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 15px 36px;
+      border-radius: 4px;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      margin-left: 14px;
+      transition: border-color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { border-color: var(--or-clair); color: var(--or-clair); }
+
+    /* ===== BANNIÈRE INFOS ===== */
+    .banniere {
+      background: var(--or);
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      padding: 18px 40px;
+      flex-wrap: wrap;
+    }
+
+    .banniere-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .banniere-item span { font-size: 18px; }
+
+    /* ===== SECTION GÉNÉRIQUE ===== */
+    section { padding: 80px 48px; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--or);
+      margin-bottom: 12px;
+    }
+
+    .section-titre {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: var(--brun);
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: #666;
+      max-width: 560px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* ===== NOS PRODUITS ===== */
+    #produits {
+      background: var(--blanc);
+      text-align: center;
+    }
+
+    #produits .section-desc { margin: 0 auto 50px; }
+
+    .produits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .produit-card {
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(200,146,42,0.15);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .produit-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(62,31,0,0.12);
+    }
+
+    .produit-visuel {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 64px;
+    }
+
+    .pain-bg { background: linear-gradient(135deg, #f5e6c8, #e8c97a); }
+    .viennoiserie-bg { background: linear-gradient(135deg, #fde8c8, #f5c07a); }
+    .patisserie-bg { background: linear-gradient(135deg, #fde0e0, #f5a0a0); }
+    .sandwich-bg { background: linear-gradient(135deg, #e8f5e8, #a0c8a0); }
+
+    .produit-info {
+      padding: 20px;
+      text-align: left;
+    }
+
+    .produit-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: var(--brun);
+    }
+
+    .produit-info p {
+      font-size: 13px;
+      color: #888;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+
+    .produit-prix {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--or);
+    }
+
+    /* ===== À PROPOS ===== */
+    #a-propos {
+      background: var(--creme);
+      display: flex;
+      align-items: center;
+      gap: 64px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .apropos-visuel {
+      flex-shrink: 0;
+      width: 300px;
+      height: 340px;
+      background: linear-gradient(135deg, var(--brun) 0%, var(--brun-clair) 100%);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .apropos-visuel .big-icon { font-size: 72px; }
+
+    .apropos-visuel p {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: var(--or-clair);
+      font-style: italic;
+    }
+
+    .apropos-texte p {
+      font-size: 16px;
+      color: #666;
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .stat-row {
+      display: flex;
+      gap: 36px;
+      margin-top: 32px;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-nombre {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: var(--or);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: #999;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ===== HORAIRES ===== */
+    #horaires {
+      background: var(--brun);
+      color: white;
+      text-align: center;
+    }
+
+    #horaires .section-titre { color: white; }
+
+    .horaires-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 2px;
+      max-width: 800px;
+      margin: 40px auto 0;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .horaire-item {
+      padding: 20px 16px;
+      background: rgba(255,255,255,0.04);
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .horaire-item:last-child { border-right: none; }
+
+    .horaire-jour {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--or-clair);
+      margin-bottom: 8px;
+    }
+
+    .horaire-heure {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .ferme { color: rgba(255,255,255,0.3) !important; }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: var(--blanc);
+      text-align: center;
+    }
+
+    #contact .section-desc { margin: 0 auto 40px; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto 48px;
+    }
+
+    .contact-card {
+      background: white;
+      border: 1px solid rgba(200,146,42,0.15);
+      border-radius: 8px;
+      padding: 28px 20px;
+    }
+
+    .contact-card .icon { font-size: 32px; margin-bottom: 12px; }
+    .contact-card h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--brun);
+    }
+    .contact-card p { font-size: 14px; color: #888; line-height: 1.6; }
+
+    /* Formulaire */
+    .contact-form {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-align: left;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+      padding: 13px 16px;
+      border: 1px solid rgba(200,146,42,0.25);
+      border-radius: 4px;
+      background: white;
+      font-size: 15px;
+      font-family: 'Lato', sans-serif;
+      color: var(--brun);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .contact-form input:focus,
+    .contact-form textarea:focus {
+      border-color: var(--or);
+    }
+
+    .contact-form textarea { resize: none; }
+
+    .contact-form button {
+      background: var(--or);
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 4px;
+      font-size: 14px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Lato', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .contact-form button:hover { background: var(--brun-clair); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #1a0a00;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      padding: 28px 40px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    footer span { color: var(--or); }
+
+    /* ===== MENTION FICTIF ===== */
+    .mention-fictif {
+      background: rgba(200,146,42,0.12);
+      border: 1px solid rgba(200,146,42,0.3);
+      border-radius: 6px;
+      padding: 10px 20px;
+      font-size: 13px;
+      color: var(--brun-clair);
+      text-align: center;
+      font-style: italic;
+      margin: 0 48px;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      nav ul { gap: 16px; }
+      #accueil h1 { font-size: 36px; }
+      #a-propos { flex-direction: column; padding: 60px 24px; }
+      .apropos-visuel { width: 100%; }
+      .stat-row { justify-content: center; }
+      section { padding: 60px 24px; }
+      .mention-fictif { margin: 0 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENTION FICTIF -->
+  <div class="mention-fictif">
+    ⚠️ Site fictif créé à titre de démonstration par <strong>ForgeSite</strong> — tous les éléments sont imaginaires.
+  </div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">
+      <span class="logo-main">🥖 Boulangerie Dupain</span>
+      <span class="logo-sub">Artisan boulanger depuis 1985</span>
+    </div>
+    <ul>
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#produits">Nos pains</a></li>
+      <li><a href="#a-propos">Histoire</a></li>
+      <li><a href="#horaires">Horaires</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="accueil">
+    <div style="position: relative; z-index: 1;">
+      <div class="hero-badge">🌾 Fait maison chaque jour</div>
+      <h1>Le pain <em>artisanal</em><br>à l'ancienne</h1>
+      <p>Depuis 1985, la famille Dupain perpétue la tradition boulangère avec des farines locales, une levée lente et un four à bois.</p>
+      <a href="#produits" class="btn-or">Voir nos produits</a>
+      <a href="#contact" class="btn-outline">Nous contacter</a>
+    </div>
+  </section>
+
+  <!-- BANNIÈRE -->
+  <div class="banniere">
+    <div class="banniere-item"><span>📍</span> 12 rue du Four, Paris 11e</div>
+    <div class="banniere-item"><span>🕗</span> Ouvert du Mardi au Dimanche</div>
+    <div class="banniere-item"><span>📞</span> 01 23 45 67 89</div>
+    <div class="banniere-item"><span>🌾</span> Farines locales & Bio</div>
+  </div>
+
+  <!-- PRODUITS -->
+  <section id="produits">
+    <p class="section-label">Ce que nous fabriquons</p>
+    <h2 class="section-titre">Nos produits</h2>
+    <p class="section-desc">Chaque produit est façonné à la main, avec des ingrédients soigneusement sélectionnés auprès de producteurs locaux.</p>
+    <div class="produits-grid">
+      <div class="produit-card">
+        <div class="produit-visuel pain-bg">🍞</div>
+        <div class="produit-info">
+          <h3>Pain de Campagne</h3>
+          <p>Mie alvéolée, croûte croustillante, levain naturel. Notre signature depuis 1985.</p>
+          <span class="produit-prix">2,80 €</span>
+        </div>
+      </div>
+      <div class="produit-card">
+        <div class="produit-visuel viennoiserie-bg">🥐</div>
+        <div class="produit-info">
+          <h3>Croissant Pur Beurre</h3>
+          <p>Beurre AOP, feuilletage traditionnel, doré à la perfection chaque matin.</p>
+          <span class="produit-prix">1,40 €</span>
+        </div>
+      </div>
+      <div class="produit-card">
+        <div class="produit-visuel patisserie-bg">🍰</div>
+        <div class="produit-info">
+          <h3>Tarte aux Fraises</h3>
+          <p>Pâte sablée maison, crème pâtissière vanille, fraises fraîches de saison.</p>
+          <span class="produit-prix">3,50 €</span>
+        </div>
+      </div>
+      <div class="produit-card">
+        <div class="produit-visuel sandwich-bg">🥖</div>
+        <div class="produit-info">
+          <h3>Baguette Tradition</h3>
+          <p>Farine T65 française, façonnage à la main, cuisson sur sole de pierre.</p>
+          <span class="produit-prix">1,20 €</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section style="background: var(--creme); padding: 80px 48px;">
+    <div id="a-propos">
+      <div class="apropos-visuel">
+        <div class="big-icon">👨‍🍳</div>
+        <p>"Le pain, c'est toute une vie."</p>
+        <p style="font-size: 12px; color: rgba(255,255,255,0.4); font-family: Lato; font-style: normal;">— Marcel Dupain, fondateur</p>
+      </div>
+      <div class="apropos-texte">
+        <p class="section-label">Notre histoire</p>
+        <h2 class="section-titre">Une famille,<br>une passion</h2>
+        <p>En 1985, Marcel Dupain ouvre sa première boulangerie dans le 11e arrondissement de Paris avec une seule conviction : le bon pain prend du temps.</p>
+        <p>Aujourd'hui, c'est son fils Thomas qui perpétue la tradition, formé aux côtés de son père pendant dix ans avant de reprendre les rênes de la boutique.</p>
+        <div class="stat-row">
+          <div class="stat">
+            <span class="stat-nombre">39</span>
+            <span class="stat-label">Ans d'histoire</span>
+          </div>
+          <div class="stat">
+            <span class="stat-nombre">12</span>
+            <span class="stat-label">Variétés de pain</span>
+          </div>
+          <div class="stat">
+            <span class="stat-nombre">100%</span>
+            <span class="stat-label">Fait maison</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HORAIRES -->
+  <section id="horaires">
+    <p class="section-label" style="color: var(--or-clair);">Quand nous trouver</p>
+    <h2 class="section-titre">Horaires d'ouverture</h2>
+    <div class="horaires-grid">
+      <div class="horaire-item">
+        <div class="horaire-jour">Lundi</div>
+        <div class="horaire-heure ferme">Fermé</div>
+      </div>
+      <div class="horaire-item">
+        <div class="horaire-jour">Mardi</div>
+        <div class="horaire-heure">7h – 19h30</div>
+      </div>
+      <div class="horaire-item">
+        <div class="horaire-jour">Mercredi</div>
+        <div class="horaire-heure">7h – 19h30</div>
+      </div>
+      <div class="horaire-item">
+        <div class="horaire-jour">Jeudi</div>
+        <div class="horaire-heure">7h – 19h30</div>
+      </div>
+      <div class="horaire-item">
+        <div class="horaire-jour">Vendredi</div>
+        <div class="horaire-heure">7h – 20h</div>
+      </div>
+      <div class="horaire-item">
+        <div class="horaire-jour">Samedi</div>
+        <div class="horaire-heure">6h30 – 20h</div>
+      </div>
+      <div class="horaire-item">
+        <div class="horaire-jour">Dimanche</div>
+        <div class="horaire-heure">7h – 13h</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label">Nous joindre</p>
+    <h2 class="section-titre">Contact & Commandes</h2>
+    <p class="section-desc">Pour toute commande spéciale (gâteau d'anniversaire, buffet...) contactez-nous à l'avance.</p>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="icon">📍</div>
+        <h4>Adresse</h4>
+        <p>12 rue du Four<br>75011 Paris</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon">📞</div>
+        <h4>Téléphone</h4>
+        <p>01 23 45 67 89<br>Du mardi au dimanche</p>
+      </div>
+      <div class="contact-card">
+        <div class="icon">📧</div>
+        <h4>Email</h4>
+        <p>contact@boulangerie-dupain.fr</p>
+      </div>
+    </div>
+    <form class="contact-form">
+      <input type="text" placeholder="Votre nom" />
+      <input type="email" placeholder="Votre email" />
+      <input type="text" placeholder="Sujet (ex: commande anniversaire)" />
+      <textarea rows="4" placeholder="Votre message ou commande..."></textarea>
+      <button type="submit">Envoyer ma demande</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><span>🥖 Boulangerie Dupain</span> — 12 rue du Four, 75011 Paris</p>
+    <p>© 2026 — Site fictif créé à titre de démonstration par <span>ForgeSite</span></p>
+  </footer>
+
+</body>
+</html>
