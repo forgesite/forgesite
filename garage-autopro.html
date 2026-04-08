@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Garage AutoPro — Réparation & Entretien Automobile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --noir: #0d0d0d;
+      --gris-fonce: #1a1a1a;
+      --gris-moyen: #2c2c2c;
+      --gris-clair: #444;
+      --rouge: #e02020;
+      --rouge-clair: #ff3333;
+      --blanc: #f5f5f5;
+      --texte: #ccc;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--noir);
+      color: var(--blanc);
+    }
+
+    /* ===== MENTION FICTIF ===== */
+    .mention-fictif {
+      background: rgba(224,32,32,0.12);
+      border-bottom: 1px solid rgba(224,32,32,0.3);
+      padding: 10px 24px;
+      font-size: 13px;
+      color: #e08080;
+      text-align: center;
+      font-style: italic;
+    }
+
+    .mention-fictif strong { color: var(--rouge-clair); }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: var(--noir);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 16px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      background: var(--rouge);
+      width: 36px;
+      height: 36px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .logo-texte {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: white;
+    }
+
+    .logo-sub {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 32px;
+    }
+
+    nav ul a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--rouge-clair); }
+
+    .nav-rdv {
+      background: var(--rouge);
+      color: white !important;
+      padding: 8px 18px;
+      border-radius: 3px;
+      transition: background 0.2s !important;
+    }
+
+    .nav-rdv:hover { background: var(--rouge-clair) !important; color: white !important; }
+
+    /* ===== HERO ===== */
+    #accueil {
+      min-height: 88vh;
+      background: var(--gris-fonce);
+      display: flex;
+      align-items: center;
+      padding: 80px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #accueil::before {
+      content: '';
+      position: absolute;
+      right: -100px;
+      top: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(224,32,32,0.08) 0%, transparent 65%);
+    }
+
+    #accueil::after {
+      content: '🔧';
+      position: absolute;
+      right: 80px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 220px;
+      opacity: 0.04;
+    }
+
+    .hero-contenu { position: relative; z-index: 1; max-width: 620px; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(224,32,32,0.15);
+      border: 1px solid rgba(224,32,32,0.35);
+      color: var(--rouge-clair);
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+
+    #accueil h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 72px;
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.0;
+      margin-bottom: 24px;
+      letter-spacing: 2px;
+    }
+
+    #accueil h1 span { color: var(--rouge); }
+
+    #accueil p {
+      font-size: 17px;
+      color: var(--texte);
+      line-height: 1.8;
+      font-weight: 300;
+      max-width: 480px;
+      margin-bottom: 40px;
+    }
+
+    .btn-rouge {
+      background: var(--rouge);
+      color: white;
+      padding: 15px 36px;
+      border-radius: 3px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-rouge:hover { background: var(--rouge-clair); }
+
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.7);
+      padding: 15px 36px;
+      border-radius: 3px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 14px;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+
+    .btn-ghost:hover { border-color: var(--rouge); color: var(--rouge-clair); }
+
+    /* ===== STATS ===== */
+    .stats-bar {
+      background: var(--rouge);
+      display: flex;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .stat-item {
+      flex: 1;
+      max-width: 220px;
+      text-align: center;
+      padding: 22px 20px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .stat-item:last-child { border-right: none; }
+
+    .stat-nombre {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: white;
+      display: block;
+      letter-spacing: 1px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 80px 48px; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--rouge);
+      margin-bottom: 12px;
+    }
+
+    .section-titre {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 42px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    /* ===== SERVICES ===== */
+    #services {
+      background: var(--gris-fonce);
+      text-align: center;
+    }
+
+    #services .section-desc {
+      font-size: 16px;
+      color: var(--texte);
+      max-width: 520px;
+      margin: 0 auto 52px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--gris-moyen);
+      padding: 36px 24px;
+      text-align: left;
+      transition: background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--rouge);
+      transition: width 0.3s;
+    }
+
+    .service-card:hover { background: #333; }
+    .service-card:hover::before { width: 100%; }
+
+    .service-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .service-card h3 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+
+    .service-card p { font-size: 14px; color: var(--texte); line-height: 1.7; font-weight: 300; }
+
+    /* ===== À PROPOS ===== */
+    #a-propos {
+      background: var(--noir);
+      display: flex;
+      gap: 64px;
+      align-items: center;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .apropos-visuel {
+      flex-shrink: 0;
+      width: 320px;
+      height: 360px;
+      background: var(--gris-moyen);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .apropos-visuel::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--rouge);
+    }
+
+    .apropos-visuel .big-icon { font-size: 80px; margin-bottom: 16px; }
+    .apropos-visuel p {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 16px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .apropos-texte p {
+      font-size: 16px;
+      color: var(--texte);
+      line-height: 1.9;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .garanties {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .garantie {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+    }
+
+    .garantie-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--rouge);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===== RENDEZ-VOUS ===== */
+    #rendez-vous {
+      background: var(--gris-fonce);
+      text-align: center;
+    }
+
+    #rendez-vous .section-desc {
+      font-size: 16px;
+      color: var(--texte);
+      max-width: 480px;
+      margin: 0 auto 44px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .rdv-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .rdv-form input,
+    .rdv-form select,
+    .rdv-form textarea {
+      padding: 13px 16px;
+      background: var(--gris-moyen);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 3px;
+      color: white;
+      font-size: 14px;
+      font-family: 'Barlow', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .rdv-form input:focus,
+    .rdv-form select:focus,
+    .rdv-form textarea:focus {
+      border-color: var(--rouge);
+    }
+
+    .rdv-form select option { background: var(--gris-moyen); }
+
+    .rdv-form input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .rdv-form .full { grid-column: 1 / -1; }
+
+    .rdv-form textarea { resize: none; }
+
+    .rdv-form button {
+      grid-column: 1 / -1;
+      background: var(--rouge);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 3px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .rdv-form button:hover { background: var(--rouge-clair); }
+
+    /* ===== HORAIRES ===== */
+    #horaires {
+      background: var(--noir);
+      text-align: center;
+    }
+
+    .horaires-table {
+      max-width: 560px;
+      margin: 40px auto 0;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .horaire-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 15px;
+    }
+
+    .horaire-row:last-child { border-bottom: none; }
+    .horaire-row:nth-child(odd) { background: rgba(255,255,255,0.02); }
+
+    .horaire-jour { color: rgba(255,255,255,0.6); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+    .horaire-heure { font-weight: 500; color: white; }
+    .horaire-heure.ferme { color: rgba(255,255,255,0.2); }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: var(--gris-fonce);
+    }
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contact-infos { display: flex; flex-direction: column; gap: 28px; margin-top: 16px; }
+
+    .contact-info-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .info-icon {
+      background: rgba(224,32,32,0.15);
+      border: 1px solid rgba(224,32,32,0.3);
+      width: 44px;
+      height: 44px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .info-texte h4 {
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--rouge);
+      margin-bottom: 4px;
+    }
+
+    .info-texte p { font-size: 15px; color: var(--texte); line-height: 1.6; font-weight: 300; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #050505;
+      color: rgba(255,255,255,0.25);
+      text-align: center;
+      padding: 28px 40px;
+      font-size: 13px;
+      line-height: 1.9;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    footer span { color: var(--rouge); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      nav { padding: 14px 20px; }
+      nav ul { gap: 14px; }
+      #accueil h1 { font-size: 48px; }
+      #accueil { padding: 60px 24px; }
+      .stats-bar { flex-wrap: wrap; }
+      section { padding: 60px 24px; }
+      #a-propos { flex-direction: column; padding: 60px 24px; }
+      .apropos-visuel { width: 100%; }
+      .rdv-form { grid-template-columns: 1fr; }
+      .rdv-form .full { grid-column: 1; }
+      .rdv-form button { grid-column: 1; }
+      .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- MENTION FICTIF -->
+  <div class="mention-fictif">
+    ⚠️ Site fictif créé à titre de démonstration par <strong>ForgeSite</strong> — tous les éléments sont imaginaires.
+  </div>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="logo">
+      <div class="logo-icon">🔧</div>
+      <div class="logo-texte">
+        <span class="logo-main">Garage AutoPro</span>
+        <span class="logo-sub">Réparation & Entretien</span>
+      </div>
+    </div>
+    <ul>
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#a-propos">À propos</a></li>
+      <li><a href="#horaires">Horaires</a></li>
+      <li><a href="#rendez-vous" class="nav-rdv">Rendez-vous</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="accueil">
+    <div class="hero-contenu">
+      <div class="hero-badge">⚙️ Experts automobile depuis 2003</div>
+      <h1>Votre véhicule<br>entre <span>de bonnes</span><br>mains</h1>
+      <p>Réparation, entretien, diagnostic électronique — notre équipe de mécaniciens certifiés prend soin de votre voiture avec rigueur et transparence.</p>
+      <a href="#rendez-vous" class="btn-rouge">Prendre rendez-vous</a>
+      <a href="#services" class="btn-ghost">Nos services</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-nombre">20+</span>
+      <span class="stat-label">Ans d'expérience</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-nombre">3 500</span>
+      <span class="stat-label">Clients satisfaits</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-nombre">100%</span>
+      <span class="stat-label">Devis gratuit</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-nombre">J+1</span>
+      <span class="stat-label">Délai moyen</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label">Ce que nous faisons</p>
+    <h2 class="section-titre">Nos services</h2>
+    <p class="section-desc">De la révision annuelle à la réparation d'urgence, nous intervenons sur toutes les marques avec des pièces d'origine garanties.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon">🔩</span>
+        <h3>Révision & Entretien</h3>
+        <p>Vidange, filtres, bougies, freins — nous effectuons toutes les révisions selon les préconisations constructeur.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">💻</span>
+        <h3>Diagnostic Électronique</h3>
+        <p>Lecture des codes défauts, reset voyants, reprogrammation — équipement de dernière génération.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">🛞</span>
+        <h3>Pneumatiques</h3>
+        <p>Changement, équilibrage, géométrie — toutes marques disponibles aux meilleurs prix.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-icon">❄️</span>
+        <h3>Climatisation</h3>
+        <p>Recharge, détection de fuite, remplacement compresseur — intervention rapide sous 24h.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section style="background: var(--noir); padding: 80px 48px;">
+    <div id="a-propos">
+      <div class="apropos-visuel">
+        <div class="big-icon">🏎️</div>
+        <p>Certifiés & Assurés</p>
+      </div>
+      <div class="apropos-texte">
+        <p class="section-label">Notre histoire</p>
+        <h2 class="section-titre">20 ans de passion<br>automobile</h2>
+        <p>Fondé en 2003 par Marc Renaud, mécanicien de formation, Garage AutoPro s'est imposé comme la référence du quartier pour l'entretien et la réparation automobile.</p>
+        <p>Notre équipe de 4 techniciens certifiés intervient sur toutes les marques, avec une priorité absolue : votre sécurité et votre satisfaction.</p>
+        <div class="garanties">
+          <div class="garantie"><div class="garantie-dot"></div>Devis gratuit et sans engagement</div>
+          <div class="garantie"><div class="garantie-dot"></div>Pièces d'origine garanties 12 mois</div>
+          <div class="garantie"><div class="garantie-dot"></div>Véhicule de prêt sur demande</div>
+          <div class="garantie"><div class="garantie-dot"></div>Toutes marques, tous modèles</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RENDEZ-VOUS -->
+  <section id="rendez-vous">
+    <p class="section-label">Réservez en ligne</p>
+    <h2 class="section-titre">Prendre rendez-vous</h2>
+    <p class="section-desc">Réservez votre créneau en quelques secondes. Nous vous confirmons par email sous 2h.</p>
+    <form class="rdv-form">
+      <input type="text" placeholder="Votre nom" />
+      <input type="tel" placeholder="Votre téléphone" />
+      <input type="email" placeholder="Votre email" class="full" />
+      <select>
+        <option value="" disabled selected>Type d'intervention</option>
+        <option>Révision / Entretien</option>
+        <option>Freinage</option>
+        <option>Diagnostic électronique</option>
+        <option>Pneumatiques</option>
+        <option>Climatisation</option>
+        <option>Autre réparation</option>
+      </select>
+      <input type="date" />
+      <textarea rows="3" placeholder="Décrivez le problème ou la prestation souhaitée..." class="full"></textarea>
+      <button type="submit">Confirmer le rendez-vous</button>
+    </form>
+  </section>
+
+  <!-- HORAIRES -->
+  <section id="horaires">
+    <p class="section-label">Quand nous trouver</p>
+    <h2 class="section-titre">Horaires d'ouverture</h2>
+    <div class="horaires-table">
+      <div class="horaire-row">
+        <span class="horaire-jour">Lundi</span>
+        <span class="horaire-heure">8h00 – 18h30</span>
+      </div>
+      <div class="horaire-row">
+        <span class="horaire-jour">Mardi</span>
+        <span class="horaire-heure">8h00 – 18h30</span>
+      </div>
+      <div class="horaire-row">
+        <span class="horaire-jour">Mercredi</span>
+        <span class="horaire-heure">8h00 – 18h30</span>
+      </div>
+      <div class="horaire-row">
+        <span class="horaire-jour">Jeudi</span>
+        <span class="horaire-heure">8h00 – 18h30</span>
+      </div>
+      <div class="horaire-row">
+        <span class="horaire-jour">Vendredi</span>
+        <span class="horaire-heure">8h00 – 19h00</span>
+      </div>
+      <div class="horaire-row">
+        <span class="horaire-jour">Samedi</span>
+        <span class="horaire-heure">9h00 – 17h00</span>
+      </div>
+      <div class="horaire-row">
+        <span class="horaire-jour">Dimanche</span>
+        <span class="horaire-heure ferme">Fermé</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-layout">
+      <div>
+        <p class="section-label">Nous joindre</p>
+        <h2 class="section-titre">Contact</h2>
+        <div class="contact-infos">
+          <div class="contact-info-item">
+            <div class="info-icon">📍</div>
+            <div class="info-texte">
+              <h4>Adresse</h4>
+              <p>47 avenue de la Mécanique<br>75013 Paris</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="info-icon">📞</div>
+            <div class="info-texte">
+              <h4>Téléphone</h4>
+              <p>01 98 76 54 32<br>Du lundi au samedi</p>
+            </div>
+          </div>
+          <div class="contact-info-item">
+            <div class="info-icon">📧</div>
+            <div class="info-texte">
+              <h4>Email</h4>
+              <p>contact@garage-autopro.fr</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 80px;">
+        <input type="text" placeholder="Votre nom" style="padding:13px 16px; background: var(--gris-moyen); border: 1px solid rgba(255,255,255,0.08); border-radius: 3px; color: white; font-size:14px; font-family:'Barlow',sans-serif; outline:none;">
+        <input type="email" placeholder="Votre email" style="padding:13px 16px; background: var(--gris-moyen); border: 1px solid rgba(255,255,255,0.08); border-radius: 3px; color: white; font-size:14px; font-family:'Barlow',sans-serif; outline:none;">
+        <textarea rows="4" placeholder="Votre message..." style="padding:13px 16px; background: var(--gris-moyen); border: 1px solid rgba(255,255,255,0.08); border-radius: 3px; color: white; font-size:14px; font-family:'Barlow',sans-serif; outline:none; resize:none;"></textarea>
+        <button style="background:var(--rouge); color:white; border:none; padding:14px; border-radius:3px; font-size:13px; letter-spacing:2px; text-transform:uppercase; cursor:pointer; font-family:'Barlow',sans-serif; font-weight:600;">Envoyer</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><span>🔧 Garage AutoPro</span> — 47 avenue de la Mécanique, 75013 Paris</p>
+    <p>© 2026 — Site fictif créé à titre de démonstration par <span>ForgeSite</span></p>
+  </footer>
+
+</body>
+</html>
