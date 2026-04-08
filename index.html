@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ForgeSite</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      color: #333;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      background: #1a1a2e;
+      padding: 16px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    nav .logo {
+      color: white;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 28px;
+    }
+
+    nav ul a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover {
+      color: #e94560;
+    }
+
+    /* ===== HERO ===== */
+    #accueil {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: white;
+      text-align: center;
+      padding: 100px 40px;
+    }
+
+    #accueil .sous-titre {
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.55;
+      margin-bottom: 16px;
+    }
+
+    #accueil h1 {
+      font-size: 42px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    #accueil p {
+      font-size: 17px;
+      opacity: 0.75;
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.8;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #e94560;
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; }
+
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 1.5px solid rgba(255,255,255,0.45);
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+    /* ===== SERVICES ===== */
+    #services {
+      background: #f7f7f7;
+      padding: 72px 40px;
+      text-align: center;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #999;
+      margin-bottom: 10px;
+    }
+
+    .section-titre {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 40px;
+      color: #1a1a2e;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #e8e8e8;
+      border-radius: 12px;
+      padding: 32px 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .card .icon { font-size: 32px; margin-bottom: 14px; }
+    .card h3 { font-size: 17px; margin-bottom: 10px; color: #1a1a2e; }
+    .card p { font-size: 14px; color: #777; line-height: 1.7; }
+
+    /* ===== À PROPOS ===== */
+    #a-propos {
+      background: white;
+      padding: 72px 40px;
+      text-align: center;
+    }
+
+    #a-propos p.description {
+      font-size: 16px;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.9;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: #1a1a2e;
+      color: white;
+      padding: 72px 40px;
+      text-align: center;
+    }
+
+    #contact h2 { font-size: 26px; margin-bottom: 10px; }
+    #contact .sous-desc { font-size: 15px; opacity: 0.6; margin-bottom: 32px; }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 420px;
+      margin: 0 auto;
+    }
+
+    form input, form textarea {
+      padding: 13px 16px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.07);
+      color: white;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    form input:focus, form textarea:focus {
+      border-color: #e94560;
+    }
+
+    form textarea { resize: none; }
+
+    form input::placeholder, form textarea::placeholder {
+      color: rgba(255,255,255,0.4);
+    }
+
+    form button {
+      background: #e94560;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.2s;
+    }
+
+    form button:hover { opacity: 0.88; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #111122;
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 22px 40px;
+      font-size: 13px;
+    }
+
+    /* ===== PORTFOLIO ===== */
+    #portfolio {
+      background: white;
+      padding: 72px 40px;
+      text-align: center;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .portfolio-card {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e8e8e8;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: left;
+    }
+
+    .portfolio-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+    }
+
+    .portfolio-preview {
+      width: 100%;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portfolio-preview.boulangerie {
+      background: linear-gradient(135deg, #f5e6c8 0%, #e8c97a 100%);
+    }
+
+    .portfolio-preview.garage {
+      background: linear-gradient(135deg, #2c3e50 0%, #4a6274 100%);
+    }
+
+    .preview-icon { font-size: 48px; margin-bottom: 8px; }
+
+    .preview-nom {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .boulangerie .preview-nom { color: #7a4e1a; }
+    .garage .preview-nom { color: white; }
+
+    .preview-tagline {
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    .boulangerie .preview-tagline { color: #7a4e1a; }
+    .garage .preview-tagline { color: rgba(255,255,255,0.8); }
+
+    .portfolio-info {
+      padding: 18px 20px;
+      background: white;
+    }
+
+    .portfolio-info h3 { font-size: 16px; margin-bottom: 6px; color: #1a1a2e; }
+    .portfolio-info p { font-size: 13px; color: #888; line-height: 1.6; }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 20px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .badge.boulangerie { background: #fff3dc; color: #b07a20; }
+    .badge.garage { background: #e8edf2; color: #2c3e50; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      nav { padding: 14px 20px; }
+      nav ul { gap: 16px; }
+      #accueil h1 { font-size: 28px; }
+      .cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <span class="logo">ForgeSite</span>
+    <ul>
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#a-propos">À propos</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="accueil">
+    <p class="sous-titre">Bienvenue sur mon site</p>
+    <h1>Titre principal de votre site</h1>
+    <p>Une courte description de votre activité ou de votre projet. Donnez envie à vos visiteurs de rester.</p>
+    <div class="btn-group">
+      <a href="#portfolio" class="btn-primary">Découvrir</a>
+      <a href="#contact" class="btn-secondary">Me contacter</a>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <p class="section-label">Ce que je propose</p>
+    <h2 class="section-titre">Mes services</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">🎨</div>
+        <h3>Design</h3>
+        <p>Interfaces modernes et attrayantes pour vos projets.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💻</div>
+        <h3>Développement</h3>
+        <p>Sites web rapides, responsives et bien structurés.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📱</div>
+        <h3>Mobile</h3>
+        <p>Compatible tous écrans, du mobile au desktop.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio">
+    <p class="section-label">Nos réalisations</p>
+    <h2 class="section-titre">Portfolio</h2>
+    <p style="font-size: 14px; color: #aaa; margin-top: -28px; margin-bottom: 36px; font-style: italic;">⚠️ Les sites présentés ci-dessous sont des exemples fictifs créés à titre de démonstration.</p>
+    <div class="portfolio-grid">
+
+      <!-- Boulangerie -->
+      <div class="portfolio-card">
+        <div class="portfolio-preview boulangerie">
+          <div class="preview-icon">🥖</div>
+          <div class="preview-nom">Boulangerie Dupain</div>
+          <div class="preview-tagline">Artisan boulanger depuis 1985</div>
+        </div>
+        <div class="portfolio-info">
+          <h3>Boulangerie Dupain</h3>
+          <p>Site vitrine pour une boulangerie artisanale : menu, horaires, localisation et prise de commande en ligne.</p>
+          <p style="font-size: 12px; color: #bbb; margin-top: 6px; font-style: italic;">— Site fictif / démonstration</p>
+          <span class="badge boulangerie">Vitrine & Commande</span>
+        </div>
+      </div>
+
+      <!-- Garage -->
+      <div class="portfolio-card">
+        <div class="portfolio-preview garage">
+          <div class="preview-icon">🔧</div>
+          <div class="preview-nom">Garage AutoPro</div>
+          <div class="preview-tagline">Réparation & entretien automobile</div>
+        </div>
+        <div class="portfolio-info">
+          <h3>Garage AutoPro</h3>
+          <p>Site professionnel pour un garage : présentation des services, prise de rendez-vous et avis clients.</p>
+          <p style="font-size: 12px; color: #bbb; margin-top: 6px; font-style: italic;">— Site fictif / démonstration</p>
+          <span class="badge garage">Pro & Rendez-vous</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="a-propos">
+    <p class="section-label">Qui suis-je ?</p>
+    <h2 class="section-titre">À propos</h2>
+    <p class="description">Parlez de vous, votre expérience, votre passion. C'est ici que vos visiteurs apprendront à vous connaître et à vous faire confiance.</p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2>Contactez-moi</h2>
+    <p class="sous-desc">Une question ? Un projet ? Écrivez-moi !</p>
+    <form>
+      <input type="text" placeholder="Votre nom" />
+      <input type="email" placeholder="Votre adresse email" />
+      <textarea rows="4" placeholder="Votre message..."></textarea>
+      <button type="submit">Envoyer le message</button>
+    </form>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 ForgeSite — Tous droits réservés</p>
+  </footer>
+
+</body>
+</html>
